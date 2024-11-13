@@ -1,0 +1,22 @@
+spring:
+  cloud:
+    gateway:
+      httpclient:
+        pool:
+          maxIdleTime: 7000
+      routes:
+        - id: bsm-svc
+          uri: http://localhost:8081
+          predicates:
+            - Path=/bsm/**
+          filters:
+            - StripPrefix=1
+        - id: message-svc
+          uri: http://localhost:8082
+          predicates:
+            - Path=/message/**
+          filters:
+            - StripPrefix=1
+logging:
+  level:
+    root: info
