@@ -100,33 +100,6 @@
                     </dependency>
                 </dependencies>
             </plugin>
-            <plugin>
-                <groupId>com.spotify</groupId>
-                <artifactId>docker-maven-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <id>build-image</id>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>build</goal>
-                        </goals>
-                    </execution>
-                </executions>
-                <configuration>
-                    <imageName>ricciliao/${project.artifactId}:1.0</imageName>
-                    <baseImage>openjdk-ub24.04:21.0.2</baseImage>
-                    <workdir>/ROOT</workdir>
-                    <entryPoint>java -jar /${project.build.finalName}.jar --port=8080</entryPoint>
-                    <dockerHost>http://192.168.165.33:2375</dockerHost>
-                    <resources>
-                        <resource>
-                            <targetPath>/</targetPath>
-                            <directory>${project.build.directory}</directory>
-                            <include>${project.build.finalName}.jar</include>
-                        </resource>
-                    </resources>
-                </configuration>
-            </plugin>
         </plugins>
         <resources>
             <resource>
@@ -138,4 +111,42 @@
             </resource>
         </resources>
     </build>
+
+    <profiles>
+        <profile>
+            <id>docker</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>com.spotify</groupId>
+                        <artifactId>docker-maven-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>build-image</id>
+                                <phase>package</phase>
+                                <goals>
+                                    <goal>build</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                        <configuration>
+                            <imageName>ricciliao/${project.artifactId}:1.0</imageName>
+                            <baseImage>ricciliao/openjdk-ub24:21.0.2</baseImage>
+                            <workdir>/ROOT</workdir>
+                            <entryPoint>java -jar /${project.build.finalName}.jar --port=8080</entryPoint>
+                            <dockerHost>http://192.168.165.33:2375</dockerHost>
+                            <resources>
+                                <resource>
+                                    <targetPath>/</targetPath>
+                                    <directory>${project.build.directory}</directory>
+                                    <include>${project.build.finalName}.jar</include>
+                                </resource>
+                            </resources>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
+
 </project>
