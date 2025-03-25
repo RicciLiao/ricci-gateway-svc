@@ -12,7 +12,7 @@
     <version>1.0.0</version>
     <packaging>jar</packaging>
     <name>ricci-gateway-svc</name>
-    <description>Brain Storming project for Spring Boot</description>
+    <description>Gateway Service</description>
 
     <properties>
         <java.version>20</java.version>
