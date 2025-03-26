@@ -1,6 +1,7 @@
 package ricciliao.gateway.filter;
 
 
+import jakarta.annotation.Nonnull;
 import org.reactivestreams.Publisher;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,7 +13,6 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.server.reactive.ServerHttpResponse;
 import org.springframework.http.server.reactive.ServerHttpResponseDecorator;
-import org.springframework.lang.NonNull;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
@@ -56,9 +56,9 @@ public class GatewayGlobalFilter implements GlobalFilter, Ordered {
         ServerHttpResponse originalResponse = exchange.getResponse();
 
         return new ServerHttpResponseDecorator(originalResponse) {
-            @NonNull
+            @Nonnull
             @Override
-            public Mono<Void> writeWith(@NonNull Publisher<? extends DataBuffer> body) {
+            public Mono<Void> writeWith(@Nonnull Publisher<? extends DataBuffer> body) {
                 if (body instanceof Flux<? extends DataBuffer> fluxBody) {
 
                     return fluxBody.collectList().flatMap(dataBuffers -> {
