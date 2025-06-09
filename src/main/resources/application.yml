@@ -1,22 +1,29 @@
 spring:
+  application:
+    version: @project.version@
+    name: gateway
   cloud:
     gateway:
       httpclient:
         pool:
           maxIdleTime: 7000
       routes:
-        - id: bsm-svc
-          uri: http://localhost:8081
+        - id: cache-provider-svc
+          uri: http://ricci-cache-provider:8083
           predicates:
-            - Path=/bsm/**
+            - Path=/cache-provider/**
           filters:
             - StripPrefix=1
         - id: message-svc
-          uri: http://localhost:8082
+          uri: http://ricci-message-svc:8082
           predicates:
             - Path=/message/**
           filters:
             - StripPrefix=1
-logging:
-  level:
-    root: info
+ricciliao:
+  x:
+    common:
+      time-zone: GMT+8
+    log:
+      executor:
+        enable: true
