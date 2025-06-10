@@ -9,14 +9,12 @@ import org.springframework.cloud.gateway.route.RouteDefinition;
 import org.springframework.cloud.gateway.route.RouteDefinitionLocator;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.Ordered;
-import ricciliao.gateway.filter.SpringdocModifyGatewayFilter;
+import ricciliao.gateway.common.GatewayConstants;
 
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import static org.springdoc.core.utils.Constants.DEFAULT_API_DOCS_URL;
 
 @Configuration
 public class SpringdocConfig {
@@ -34,25 +32,13 @@ public class SpringdocConfig {
                     .forEach(routeDefinition -> {
                         String name = routeDefinition.getId().replace("-svc", "");
                         AbstractSwaggerUiConfigProperties.SwaggerUrl swaggerUrl =
-                                new AbstractSwaggerUiConfigProperties.SwaggerUrl(name, "/" + name + DEFAULT_API_DOCS_URL, null);
+                                new AbstractSwaggerUiConfigProperties.SwaggerUrl(name, "/" + name + GatewayConstants.API_DOCS_URL, null);
                         urls.add(swaggerUrl);
                     });
         }
         swaggerUiConfigProperties.setUrls(urls);
 
         return urls;
-    }
-
-
-    @Bean
-    public SpringdocModifyGatewayFilter springdocModifyGatewayFilter(@Autowired SpringDocConfigProperties springDocConfigProperties,
-                                                                     @Autowired Set<AbstractSwaggerUiConfigProperties.SwaggerUrl> swaggerUrlSet) {
-
-        return new SpringdocModifyGatewayFilter(
-                Ordered.HIGHEST_PRECEDENCE + 3,
-                springDocConfigProperties,
-                swaggerUrlSet
-        );
     }
 
 }
