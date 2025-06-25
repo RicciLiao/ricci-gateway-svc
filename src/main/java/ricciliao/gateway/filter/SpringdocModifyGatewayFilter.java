@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import io.swagger.v3.core.util.ObjectMapperFactory;
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.servers.Server;
+import jakarta.annotation.Nonnull;
 import org.reactivestreams.Publisher;
 import org.springframework.cloud.gateway.filter.GatewayFilter;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
@@ -13,7 +14,6 @@ import org.springframework.core.io.buffer.DataBufferFactory;
 import org.springframework.core.io.buffer.DataBufferUtils;
 import org.springframework.core.io.buffer.DefaultDataBufferFactory;
 import org.springframework.http.server.reactive.ServerHttpResponseDecorator;
-import org.springframework.lang.NonNull;
 import org.springframework.util.CollectionUtils;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Flux;
@@ -57,9 +57,9 @@ public class SpringdocModifyGatewayFilter implements GatewayFilter, Ordered {
         DataBufferFactory bufferFactory = exchange.getResponse().bufferFactory();
 
         return new ServerHttpResponseDecorator(exchange.getResponse()) {
-            @NonNull
+            @Nonnull
             @Override
-            public Mono<Void> writeWith(@NonNull Publisher<? extends DataBuffer> body) {
+            public Mono<Void> writeWith(@Nonnull Publisher<? extends DataBuffer> body) {
                 if (!(body instanceof Flux<? extends DataBuffer> fluxBody)) {
 
                     return super.writeWith(body);
