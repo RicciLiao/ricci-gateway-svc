@@ -20,6 +20,12 @@ spring:
             - Path=/message/**
           filters:
             - StripPrefix=1
+        - id: bsm-svc
+          uri: http://ricci-bsm-svc:8081
+          predicates:
+            - Path=/bsm/**
+          filters:
+            - StripPrefix=1
         - id: cache-provider-svc-swagger
           uri: http://ricci-cache-provider:8083
           order: -1
@@ -35,6 +41,16 @@ spring:
           order: -1
           predicates:
             - Path=/message/v3/api-docs
+          filters:
+            - StripPrefix=1
+            - name: SpringdocModify
+              args:
+                enabled: true
+        - id: bsm-svc-swagger
+          uri: http://ricci-bsm-svc:8081
+          order: -1
+          predicates:
+            - Path=/bsm/v3/api-docs
           filters:
             - StripPrefix=1
             - name: SpringdocModify
