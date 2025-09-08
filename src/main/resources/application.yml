@@ -1,7 +1,4 @@
 spring:
-  application:
-    version: @project.version@
-    name: gateway
   cloud:
     gateway:
       httpclient:
