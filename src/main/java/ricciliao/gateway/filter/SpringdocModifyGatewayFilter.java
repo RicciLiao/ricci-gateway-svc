@@ -19,14 +19,14 @@ import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import ricciliao.gateway.common.GatewayConstants;
-import ricciliao.x.log.AuditLoggerFactory;
-import ricciliao.x.log.logger.AuditLogger;
+import ricciliao.x.log.api.XLogger;
+import ricciliao.x.log.api.XLoggerFactory;
 
 import java.nio.charset.StandardCharsets;
 
 public class SpringdocModifyGatewayFilter implements GatewayFilter, Ordered {
 
-    private static final AuditLogger logger = AuditLoggerFactory.getLogger(SpringdocModifyGatewayFilter.class);
+    private static final XLogger logger = XLoggerFactory.getLogger(SpringdocModifyGatewayFilter.class);
 
     private final Integer order;
 

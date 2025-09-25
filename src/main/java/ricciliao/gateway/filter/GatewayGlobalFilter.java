@@ -6,12 +6,12 @@ import org.springframework.cloud.gateway.filter.GlobalFilter;
 import org.springframework.core.Ordered;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
-import ricciliao.x.log.AuditLoggerFactory;
-import ricciliao.x.log.logger.AuditLogger;
+import ricciliao.x.log.api.XLogger;
+import ricciliao.x.log.api.XLoggerFactory;
 
 public class GatewayGlobalFilter implements GlobalFilter, Ordered {
 
-    private static final AuditLogger logger = AuditLoggerFactory.getLogger(GatewayGlobalFilter.class);
+    private static final XLogger logger = XLoggerFactory.getLogger(GatewayGlobalFilter.class);
 
     private final Integer order;
 

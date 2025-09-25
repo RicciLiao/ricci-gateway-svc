@@ -67,6 +67,8 @@ ricciliao:
   x:
     common:
       time-zone: GMT+8
+      consumer: gateway
+      version: ${project.version}
     log:
       executor:
         enable: true
