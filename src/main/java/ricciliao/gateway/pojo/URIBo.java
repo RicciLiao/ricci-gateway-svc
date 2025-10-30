@@ -10,26 +10,23 @@ public class URIBo implements Serializable {
 
     @Serial
     private static final long serialVersionUID = -3155439041664787714L;
+    private String uriPath;
+    private HttpMethod httpMethod;
+    private String httpMethodStr;
+
 
     public URIBo() {
     }
-
     public URIBo(String uriPath, String httpMethodStr) {
         this.uriPath = uriPath;
         this.httpMethodStr = httpMethodStr;
         this.httpMethod = HttpMethod.valueOf(httpMethodStr);
     }
-
     public URIBo(String uriPath, HttpMethod httpMethod) {
         this.uriPath = uriPath;
         this.httpMethod = httpMethod;
         this.httpMethodStr = httpMethod.name();
     }
-
-
-    private String uriPath;
-    private HttpMethod httpMethod;
-    private String httpMethodStr;
 
     public String getUriPath() {
         return uriPath;
