@@ -5,10 +5,11 @@ spring:
         pool:
           maxIdleTime: 7000
       routes:
-        - id: cache-provider-svc
-          uri: http://ricci-cache-provider:8083
+        # application service routes
+        - id: mcp-svc
+          uri: http://ricci-mcp-svc:8083
           predicates:
-            - Path=/cache-provider/**
+            - Path=/mcp/**
           filters:
             - StripPrefix=1
         - id: message-svc
@@ -23,11 +24,12 @@ spring:
             - Path=/bsm/**
           filters:
             - StripPrefix=1
-        - id: cache-provider-svc-swagger
-          uri: http://ricci-cache-provider:8083
+        # swagger service routes
+        - id: mcp-svc-swagger
+          uri: http://ricci-mcp-svc:8083
           order: -1
           predicates:
-            - Path=/cache-provider/v3/api-docs
+            - Path=/mcp/v3/api-docs
           filters:
             - StripPrefix=1
             - name: SpringdocModify
@@ -66,9 +68,7 @@ management:
 ricciliao:
   x:
     common:
-      time-zone: GMT+8
       consumer: gateway
-      version: ${project.version}
     log:
       executor:
         enable: true
