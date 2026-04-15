@@ -23,7 +23,6 @@ public class SpringdocConfig {
     public Set<AbstractSwaggerUiConfigProperties.SwaggerUrl> swaggerUrlSet(RouteDefinitionLocator locator,
                                                                            SwaggerUiConfigProperties swaggerUiConfigProperties,
                                                                            @Autowired SpringDocConfigProperties springDocConfigProperties) {
-        springDocConfigProperties.getWebjars().setPrefix("");
         Set<AbstractSwaggerUiConfigProperties.SwaggerUrl> urls = new HashSet<>();
         List<RouteDefinition> definitions = locator.getRouteDefinitions().collectList().block();
         if (definitions != null) {

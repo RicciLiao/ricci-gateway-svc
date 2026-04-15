@@ -1,60 +1,78 @@
 spring:
   cloud:
     gateway:
-      httpclient:
-        pool:
-          maxIdleTime: 7000
-      routes:
-        # application service routes
-        - id: mcp-svc
-          uri: http://ricci-mcp-svc:8083
-          predicates:
-            - Path=/mcp/**
-          filters:
-            - StripPrefix=1
-        - id: message-svc
-          uri: http://ricci-message-svc:8082
-          predicates:
-            - Path=/message/**
-          filters:
-            - StripPrefix=1
-        - id: bsm-svc
-          uri: http://ricci-bsm-svc:8081
-          predicates:
-            - Path=/bsm/**
-          filters:
-            - StripPrefix=1
-        # swagger service routes
-        - id: mcp-svc-swagger
-          uri: http://ricci-mcp-svc:8083
-          order: -1
-          predicates:
-            - Path=/mcp/v3/api-docs
-          filters:
-            - StripPrefix=1
-            - name: SpringdocModify
-              args:
-                enabled: true
-        - id: message-svc-swagger
-          uri: http://ricci-message-svc:8082
-          order: -1
-          predicates:
-            - Path=/message/v3/api-docs
-          filters:
-            - StripPrefix=1
-            - name: SpringdocModify
-              args:
-                enabled: true
-        - id: bsm-svc-swagger
-          uri: http://ricci-bsm-svc:8081
-          order: -1
-          predicates:
-            - Path=/bsm/v3/api-docs
-          filters:
-            - StripPrefix=1
-            - name: SpringdocModify
-              args:
-                enabled: true
+      server:
+        webflux:
+          routes:
+                    # application service routes
+                    - id: mcp-svc
+                      uri: http://ricci-mcp-svc:8083
+                      predicates:
+                        - Path=/mcp/**
+                      filters:
+                        - StripPrefix=1
+                    - id: message-svc
+                      uri: http://ricci-message-svc:8082
+                      predicates:
+                        - Path=/message/**
+                      filters:
+                        - StripPrefix=1
+                    - id: bsm-svc
+                      uri: http://ricci-bsm-svc:8081
+                      predicates:
+                        - Path=/bsm/**
+                      filters:
+                        - StripPrefix=1
+                    - id: fsp-svc
+                      uri: http://ricci-fsp-svc:8087
+                      predicates:
+                        - Path=/fsp/**
+                      filters:
+                        - StripPrefix=1
+                    # swagger service routes
+                    - id: mcp-svc-swagger
+                      uri: http://ricci-mcp-svc:8083
+                      order: -1
+                      predicates:
+                        - Path=/mcp/v3/api-docs
+                      filters:
+                        - StripPrefix=1
+                        - name: SpringdocModify
+                          args:
+                            enabled: true
+                    - id: message-svc-swagger
+                      uri: http://ricci-message-svc:8082
+                      order: -1
+                      predicates:
+                        - Path=/message/v3/api-docs
+                      filters:
+                        - StripPrefix=1
+                        - name: SpringdocModify
+                          args:
+                            enabled: true
+                    - id: bsm-svc-swagger
+                      uri: http://ricci-bsm-svc:8081
+                      order: -1
+                      predicates:
+                        - Path=/bsm/v3/api-docs
+                      filters:
+                        - StripPrefix=1
+                        - name: SpringdocModify
+                          args:
+                            enabled: true
+                    - id: fsp-svc-swagger
+                      uri: http://ricci-fsp-svc:8087
+                      order: -1
+                      predicates:
+                        - Path=/fsp/v3/api-docs
+                      filters:
+                        - StripPrefix=1
+                        - name: SpringdocModify
+                          args:
+                            enabled: true
+          httpclient:
+            pool:
+              max-idle-time: 7000
 management:
   endpoints:
     web:
