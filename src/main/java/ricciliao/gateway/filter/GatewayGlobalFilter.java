@@ -9,6 +9,8 @@ import reactor.core.publisher.Mono;
 import ricciliao.x.log.api.XLogger;
 import ricciliao.x.log.api.XLoggerFactory;
 
+import java.time.Duration;
+
 public class GatewayGlobalFilter implements GlobalFilter, Ordered {
 
     private static final XLogger logger = XLoggerFactory.getLogger(GatewayGlobalFilter.class);
@@ -32,9 +34,16 @@ public class GatewayGlobalFilter implements GlobalFilter, Ordered {
         final String requestUrl = exchange.getRequest().getURI().getPath();
         logger.info("Gateway Route Request: Pre Route to {}.", requestUrl);
 
-        return chain
-                .filter(mutateBuilder.build())
-                .doOnSuccess(result -> logger.info("Gateway Route Result: Post Route to {}.", requestUrl));
+        if (requestUrl.startsWith("/message")) {
+
+            return chain.filter(exchange);
+        }
+
+        return Mono
+                .delay(Duration.ofSeconds(2))
+                .then(chain
+                        .filter(mutateBuilder.build())
+                        .doOnSuccess(result -> logger.info("Gateway Route Result: Post Route to {}.", requestUrl)));
     }
 
     @Override
